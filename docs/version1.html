@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Jianchen INF1339 Project 2</title>
+  <style>
+    .test_class {
+
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>API Project Version 1</h3>
+  <p id="output">Click the button below to get the recent news from New York Times about Toronto</p>
+  <button id="button" type="button">Get News</button>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+<script>
+  var today = new Date();
+  var getYear = String(today.getFullYear());
+
+  if (today.getMonth() < 10) {
+    var getMonth = String("0" + today.getMonth());
+  } else {
+    var getMonth = String(today.getMonth());
+  }
+
+  if (today.getDate() < 10) {
+    var getDate = String("0" + today.getDate());
+  } else {
+    var getDate = String(today.getDate());
+  }
+
+  var endDate = getYear + getMonth + getDate;
+
+  var apiKey = "z42LCG9pr7b5f02HdSUYzhYG6Pe3lMaW";
+
+  var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Toronto&begin_date=20190901&end_date=" + endDate + "&api-key=" + apiKey;
+
+  document.getElementById("button").addEventListener("click", function() {
+
+    loadJSON(url, function(data) {
+      outputResult = data.response.docs[0].headline.main;
+      document.getElementById("output").innerHTML = outputResult;
+    });
+  });
+
+  function setup() {
+    noCanvas();
+  }
+</script>
+
+</html>
+
+
+<!-- NYT API: z42LCG9pr7b5f02HdSUYzhYG6Pe3lMaW -->
+<!-- map box token:pk.eyJ1IjoiZGF6aHVhbmdlciIsImEiOiJjazE0MjhqY3UwN2hjM2NuaTFpM2VybzE4In0._RxiVcGlxc4G0-stNzKEHg -->
